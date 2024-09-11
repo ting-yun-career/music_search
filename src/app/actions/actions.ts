@@ -1,3 +1,5 @@
+'use server';
+
 import libQueryString from 'querystring';
 
 const client_id = '516b373f0f8043b49068db0a9b75df25'; 
