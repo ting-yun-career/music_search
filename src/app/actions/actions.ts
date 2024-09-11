@@ -2,11 +2,6 @@
 
 import libQueryString from 'querystring';
 
-const client_id = '516b373f0f8043b49068db0a9b75df25'; 
-const client_secret = 'd7f348b994ac4125a2f71d476e9438c1';
-
-// const token1 = 'BQAtpyJd-UtnBG3L04TliT4FFfepdXkpwcjE5wVf0PNazXEqjPvU8F0mMkZzbwCmOcxe1nVlT0-mjNHCppwjePC65i4PANPbX3Mpc-c3biC2Ocjm5xA';
-
 export async function getToken() {
   const response = await fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
@@ -15,7 +10,7 @@ export async function getToken() {
     }),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64')),
+      'Authorization': 'Basic ' + (Buffer.from(process.env.client_id + ':' + process.env.client_secret).toString('base64')),
     },
   });
 
