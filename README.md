@@ -21,20 +21,16 @@ Note that you will need to create your own account for both in order to make the
 
 ## Install Project
 
-> yarn
-
-if you don't have yarn, install it this way
-
-> npm i -g yarn
+> npm i -ci
 
 ## Run in dev mode
 
-> npm dev
+> npm run dev
 
 ## Run in prodction mode
 
-> npm start
+> npm run start
 
 ## Issues
 
-> xxx@support.com
+> google.it.first@support.com
