@@ -2,7 +2,7 @@
 
 import libQueryString from "querystring";
 
-import { Collection, MongoClient } from "mongodb";
+import { MongoClient } from "mongodb";
 
 /**
  * Processes site data to ensure security.
