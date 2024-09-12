@@ -9,3 +9,7 @@ export function processString(str: string, type: string) {
 
   return { result: str };
 }
+
+export function uuid(max: number = 100000) {
+  return Math.floor(Math.random() * max).toString();
+}

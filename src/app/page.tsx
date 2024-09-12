@@ -1,4 +1,6 @@
 "use client";
+
+import { uuid } from "./(util)/_util";
 import { fetchSiteData, updateSiteData } from "./actions/mongodb";
 import { getToken } from "./actions/spotify";
 
@@ -18,7 +20,7 @@ export default function Home() {
       favourites: {
         artist: [
           {
-            id: Math.floor(Math.random() * 100000).toString(),
+            id: uuid(),
             name: "Taylor Swift",
             description: "",
           },
