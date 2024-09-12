@@ -1,4 +1,4 @@
-import { processString } from "../(util)/_util";
+import { processString } from "../util/string";
 
 export async function getToken() {
   const response = await fetch("https://accounts.spotify.com/api/token", {
