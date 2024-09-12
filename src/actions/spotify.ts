@@ -3,7 +3,9 @@
 import { kvRead, kvSave } from "@/util/kv";
 import libQueryString from "querystring";
 
-export async function checkToken() {
+// private
+
+async function checkToken() {
   const token = await kvRead("spotifyToken");
   const { status } = await fetch(
     `https://api.spotify.com/v1/search?q=abc&type=artist`,
@@ -15,7 +17,7 @@ export async function checkToken() {
   return status === 200;
 }
 
-export async function refreshToken() {
+async function refreshToken() {
   const isTokenValid = await checkToken();
 
   if (!isTokenValid) {
@@ -38,7 +40,14 @@ export async function refreshToken() {
   }
 }
 
-//
+async function checkAndRefreshToken() {
+  if (!(await checkToken())) {
+    await refreshToken();
+  }
+}
+
+// public
+
 /**
  * Searches Spotify for content based on a query string and type filters.
  *
@@ -56,9 +65,7 @@ export async function search(
   queryString: string,
   type: string[] = ["artist", "album"]
 ) {
-  if (!(await checkToken())) {
-    await refreshToken();
-  }
+  await checkAndRefreshToken();
 
   let promise;
 
@@ -74,10 +81,14 @@ export async function search(
         headers: { Authorization: "Bearer " + apiToken },
       }
     );
-    const resp = await response.json();
-    promise = Promise.resolve({ status: "success", data: resp });
+    const json = await response.json();
+    if (response.status === 200) {
+      promise = Promise.resolve({ status: "success", data: json });
+    } else {
+      promise = Promise.reject({ status: "fail", error: json.error });
+    }
   } catch (error) {
-    promise = Promise.reject({ status: "fail", error });
+    promise = Promise.reject({ status: "fail", error, test: "test" });
   }
 
   return promise;
