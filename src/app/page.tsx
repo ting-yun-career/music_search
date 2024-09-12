@@ -1,3 +1,5 @@
+import Header from "@/component/header";
+
 export default function Home() {
   // function handleUpdateSiteData() {
   //   updateSiteData({
@@ -15,6 +17,7 @@ export default function Home() {
 
   return (
     <>
+      <Header />
       <div>Main</div>
     </>
   );
