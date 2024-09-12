@@ -58,15 +58,9 @@ export async function search(
   queryString: string,
   type: string[] = ["artist", "album"]
 ) {
-  let promise, apiToken;
+  let promise;
 
-  try {
-    const { data } = await kvRead("spotifyToken");
-    apiToken = data;
-  } catch (error) {
-    promise = Promise.reject({ status: "fail", error });
-    return promise;
-  }
+  const apiToken = await kvRead("spotifyToken");
 
   try {
     const response = await fetch(
