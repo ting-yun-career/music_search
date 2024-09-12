@@ -5,8 +5,6 @@ import libQueryString from "querystring";
 
 export async function checkToken() {
   const token = await kvRead("spotifyToken");
-  console.log("token", token);
-
   const { status } = await fetch(
     `https://api.spotify.com/v1/search?q=abc&type=artist`,
     {
@@ -58,11 +56,15 @@ export async function search(
   queryString: string,
   type: string[] = ["artist", "album"]
 ) {
+  if (!(await checkToken())) {
+    await refreshToken();
+  }
+
   let promise;
 
-  const apiToken = await kvRead("spotifyToken");
-
   try {
+    const apiToken = await kvRead("spotifyToken");
+
     const response = await fetch(
       `https://api.spotify.com/v1/search?q=${libQueryString.escape(
         queryString
@@ -73,15 +75,7 @@ export async function search(
       }
     );
     const resp = await response.json();
-    if (resp?.error?.status) {
-      if (resp.error.status === 401) {
-        console.log("token invalid, getting new one...");
-        await refreshToken();
-        return search(queryString, type);
-      }
-    } else {
-      promise = Promise.resolve({ status: "success", data: resp });
-    }
+    promise = Promise.resolve({ status: "success", data: resp });
   } catch (error) {
     promise = Promise.reject({ status: "fail", error });
   }
