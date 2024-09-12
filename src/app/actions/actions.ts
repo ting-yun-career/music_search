@@ -1,7 +1,6 @@
 "use server";
 
 import libQueryString from "querystring";
-
 import { MongoClient } from "mongodb";
 
 /**
@@ -16,8 +15,7 @@ function securityProcessing(siteData: any) {
 }
 
 async function getMongoCollection() {
-  const uri =
-    "mongodb+srv://tingyuncareer:1234@cluster0.ccshp9b.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  const uri = `mongodb+srv://${process.env.mongodb_credential}@cluster0.ccshp9b.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
   const client = new MongoClient(uri);
   await client.connect();
 
@@ -76,9 +74,9 @@ export async function getToken() {
       "Content-Type": "application/x-www-form-urlencoded",
       Authorization:
         "Basic " +
-        Buffer.from(
-          process.env.client_id + ":" + process.env.client_secret
-        ).toString("base64"),
+        Buffer.from(process.env.spotify_credential as string).toString(
+          "base64"
+        ),
     },
   });
 

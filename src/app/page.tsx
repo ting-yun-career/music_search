@@ -1,16 +1,12 @@
-// import { getToken } from "./actions/actions";
-// export const revalidate = 0;
-
 "use client";
-
-import { fetchSiteData } from "./actions/actions";
+import { getToken, fetchSiteData } from "./actions/actions";
 
 export default function Home() {
-  // function fetchToken() {
-  //   getToken().then(resp => {
-  //     console.log('tokenResp', resp)
-  //   })
-  // }
+  function genToken() {
+    getToken().then((resp) => {
+      console.log("tokenResp", resp);
+    });
+  }
 
   function doRetrieveToken() {
     fetchSiteData().then((siteData) => console.log(siteData));
@@ -19,6 +15,8 @@ export default function Home() {
   return (
     <>
       <div>Main</div>
+      <button onClick={() => genToken()}>Generate Token</button>
+      <div></div>
       <button onClick={() => doRetrieveToken()}>Retrieve Token</button>
     </>
   );
