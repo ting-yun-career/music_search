@@ -16,10 +16,11 @@ export default function Home() {
   function handleUpdateSiteData() {
     updateSiteData({
       favourites: {
-        artists: [
+        artist: [
           {
-            id: "abc",
+            id: Math.floor(Math.random() * 100000).toString(),
             name: "Taylor Swift",
+            description: "",
           },
         ],
       },

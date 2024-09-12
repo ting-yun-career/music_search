@@ -57,9 +57,10 @@ export async function fetchSiteData() {
 }
 
 export async function updateSiteData(siteData: SiteData) {
+  let siteDataJson;
+
   try {
-    const siteDataJson = JSON.stringify(siteData);
-    console.log(siteDataJson);
+    siteDataJson = JSON.stringify(siteData);
   } catch (error) {
     return Promise.reject({
       status: "fail",
@@ -67,15 +68,36 @@ export async function updateSiteData(siteData: SiteData) {
     });
   }
 
-  let collection, client;
+  let collection, client, promise;
   try {
     const connection = await getMongoCollection();
     collection = connection.collection;
     client = connection.client;
+
+    const result = await collection.updateOne(
+      { name: "music_search" },
+      { $set: { siteData: siteDataJson } },
+      {}
+    );
+
+    if (!result.acknowledged) {
+      promise = Promise.reject({
+        status: "fail",
+        message: "Unable to update siteData",
+      });
+    }
+
+    promise = Promise.resolve({
+      status: "success",
+    });
   } catch (error) {
-    return Promise.reject({
+    promise = Promise.reject({
       status: "fail",
       message: "Unable to establish MongoDB connection",
     });
+  } finally {
+    client?.close();
   }
+
+  return promise;
 }
