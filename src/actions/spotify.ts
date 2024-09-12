@@ -1,32 +1,49 @@
-import { processString } from "../util/string";
+"use server";
 
-export async function getToken() {
-  const response = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    body: new URLSearchParams({
-      grant_type: "client_credentials",
-    }),
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization:
-        "Basic " +
-        Buffer.from(process.env.spotify_credential as string).toString(
-          "base64"
-        ),
-    },
-  });
-  return response.json();
+import { kvRead, kvSave } from "@/util/kv";
+import libQueryString from "querystring";
+
+export async function checkToken() {
+  const token = await kvRead("spotifyToken");
+  console.log("token", token);
+
+  const { status } = await fetch(
+    `https://api.spotify.com/v1/search?q=abc&type=artist`,
+    {
+      method: "GET",
+      headers: { Authorization: "Bearer " + token },
+    }
+  );
+  return status === 200;
 }
 
-// export async function saveToken(newToken) {}
+export async function refreshToken() {
+  const isTokenValid = await checkToken();
+
+  if (!isTokenValid) {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      body: new URLSearchParams({
+        grant_type: "client_credentials",
+      }),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization:
+          "Basic " +
+          Buffer.from(process.env.spotify_credential as string).toString(
+            "base64"
+          ),
+      },
+    });
+    const { access_token } = await response.json();
+    await kvSave("spotifyToken", access_token);
+  }
+}
 
 //
 /**
  * Searches Spotify for content based on a query string and type filters.
  *
- * usage:
- *
- * @param {string} apiToken A valid Spotify API access token.
  * @param {string} queryString The search query string.
  * @param {string[]} type An array of content types to search for (e.g., 'artist', 'album').
  * @returns {Promise<object>} A Promise that resolves to the search results object upon success, or rejects with an error.
@@ -38,37 +55,38 @@ export async function getToken() {
  *   .catch(error => console.log('fail: ', error));
  */
 export async function search(
-  apiToken: string,
   queryString: string,
-  type: string[]
+  type: string[] = ["artist", "album"]
 ) {
-  let promise;
+  let promise, apiToken;
 
   try {
-    const { result } = processString(queryString, "queryString");
-    if (result) {
-      const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${result}&type=${type?.join(",")}`,
-        {
-          method: "GET",
-          headers: { Authorization: "Bearer " + apiToken },
-        }
-      );
-      const resp = await response.json();
-      if (resp?.error?.status) {
-        console.log("error status: ", resp.error.status);
-        if (resp.error.status === 401) {
-          // invalid or expired
-          const { access_token } = await getToken();
-          console.log("new token: ", access_token);
-          // new token:  {
-          //   access_token: 'BQAtpyJd-UtnBG3L04TliT4FFfepdXkpwcjE5wVf0PNazXEqjPvU8F0mMkZzbwCmOcxe1nVlT0-mjNHCppwjePC65i4PANPbX3Mpc-c3biC2Ocjm5xA',
-          //   token_type: 'Bearer',
-          //   expires_in: 3600
-          // }
-        }
-        promise = Promise.reject(resp.error);
+    const { data } = await kvRead("spotifyToken");
+    apiToken = data;
+  } catch (error) {
+    promise = Promise.reject({ status: "fail", error });
+    return promise;
+  }
+
+  try {
+    const response = await fetch(
+      `https://api.spotify.com/v1/search?q=${libQueryString.escape(
+        queryString
+      )}&type=${type?.join(",")}`,
+      {
+        method: "GET",
+        headers: { Authorization: "Bearer " + apiToken },
       }
+    );
+    const resp = await response.json();
+    if (resp?.error?.status) {
+      if (resp.error.status === 401) {
+        console.log("token invalid, getting new one...");
+        await refreshToken();
+        return search(queryString, type);
+      }
+    } else {
+      promise = Promise.resolve({ status: "success", data: resp });
     }
   } catch (error) {
     promise = Promise.reject({ status: "fail", error });
