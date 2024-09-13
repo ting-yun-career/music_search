@@ -20,7 +20,6 @@ export default function Search(props: Props) {
     () =>
       debounce(function (value: string) {
         if (value?.length >= 3) {
-          console.log("searching for: ", value);
           setResult("anything");
         } else {
           setResult(null);
@@ -54,7 +53,7 @@ export default function Search(props: Props) {
           </span>
           <span
             className="w-[40px] bg-white text-gray-900 flex items-center justify-center rounded-r-[3px] cursor-pointer"
-            onClick={(e) => {
+            onClick={() => {
               setKeyword("");
               setResult(null);
             }}
