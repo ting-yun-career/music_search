@@ -10,13 +10,16 @@ interface Props {
   id: string;
 }
 
-// type Result = {};
+type Result = {
+  artists: any;
+  albums: any;
+};
 
 export default function Search(props: Props) {
   const { id } = props;
 
   const [keyword, setKeyword] = useState("");
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<Result | null>(null);
 
   const debouncedSearch = useMemo(
     () =>
