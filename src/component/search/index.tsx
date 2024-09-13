@@ -1,9 +1,23 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 interface Props {
   id: string;
 }
 
+type Result = {};
+
 export default function Search(props: Props) {
   const { id } = props;
+
+  const [keyword, setKeyword] = useState("");
+  const [isOpen, setOpen] = useState(false);
+  const [result, setResult] = useState(null);
+
+  const handleChange = function (value: string) {
+    setKeyword(value);
+  };
 
   return (
     <>
@@ -18,6 +32,8 @@ export default function Search(props: Props) {
             className="w-full px-4 py-2 text-xs outline-1"
             aria-label="Music Search"
             placeholder="Search by artist or album"
+            value={keyword}
+            onChange={(e) => handleChange(e.target.value)}
           />
         </span>
         <span className="w-[40px] bg-white text-gray-900 flex items-center justify-center rounded-r-[3px] cursor-pointer">
