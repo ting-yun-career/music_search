@@ -1,5 +1,6 @@
 import Image from "next/image";
 import headerBg from "@/asset/header-background.jpg";
+import Search from "@/component/search";
 
 export default function Home() {
   return (
@@ -21,27 +22,7 @@ export default function Home() {
             >
               Music Search
             </label>
-            <div className="flex justify-center">
-              <span className="w-[40px] bg-white text-gray-900 flex items-center justify-around rounded-l-[3px] cursor-pointer">
-                <span className="material-symbols-outlined text-[20px]">
-                  search
-                </span>
-              </span>
-              <span className="flex-1 max-w-[500px]">
-                <input
-                  type="text"
-                  id="music-search"
-                  className="w-full px-4 py-2 text-xs outline-1"
-                  aria-label="Music Search"
-                  placeholder="Search by artist or album"
-                />
-              </span>
-              <span className="w-[40px] bg-white text-gray-900 flex items-center justify-center rounded-r-[3px] cursor-pointer">
-                <span className="material-symbols-outlined text-[20px]">
-                  close
-                </span>
-              </span>
-            </div>
+            <Search id="music-search" />
           </div>
         </div>
       </div>
