@@ -54,7 +54,14 @@ export default function Search(props: Props) {
                 setKeyword(e.target.value);
                 debouncedSearch(e.target.value);
               }}
+              autoComplete="off"
+              list="mySuggestions"
             />
+            <datalist id="mySuggestions">
+              <option value="The Weekend" />
+              <option value="Taylor Swift" />
+              <option value="Adele" />
+            </datalist>
           </span>
           <span
             className="w-[40px] bg-white text-gray-900 flex items-center justify-center rounded-r-[3px] cursor-pointer"
