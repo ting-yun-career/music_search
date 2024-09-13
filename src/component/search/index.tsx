@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import debounce from "lodash/debounce";
 
 interface Props {
@@ -13,8 +13,8 @@ export default function Search(props: Props) {
   const { id } = props;
 
   const [keyword, setKeyword] = useState("");
-  const [isOpen, setOpen] = useState(false);
-  const [result, setResult] = useState(null);
+  // const [isOpen, setOpen] = useState(false);
+  // const [result, setResult] = useState(null);
 
   const debouncedSearch = useMemo(
     () =>
