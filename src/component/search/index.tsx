@@ -7,7 +7,7 @@ interface Props {
   id: string;
 }
 
-type Result = {};
+// type Result = {};
 
 export default function Search(props: Props) {
   const { id } = props;

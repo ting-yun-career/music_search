@@ -10,7 +10,7 @@ export default function NotFound() {
       clearTimeout(timer);
       router.push("/");
     }, 5000);
-  }, []);
+  }, [router]);
 
   return (
     <>
