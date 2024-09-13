@@ -2,6 +2,7 @@
 
 import { kvRead, kvSave } from "@/util/kv";
 import libQueryString from "querystring";
+import axios from "axios";
 
 // private
 
@@ -93,4 +94,37 @@ export async function search(
   }
 
   return promise;
+}
+
+export async function getArtist(id: string) {
+  await checkAndRefreshToken();
+
+  let promise;
+  try {
+    const apiToken = await kvRead("spotifyToken");
+    const response = await axios.get(
+      `https://api.spotify.com/v1/artists/${id}`,
+      { headers: { Authorization: "Bearer " + apiToken } }
+    );
+    promise = Promise.resolve({ status: "success", data: response.data });
+  } catch (error) {
+    promise = Promise.reject({ status: "fail", error });
+  }
+  return promise;
+}
+
+export async function getAlubm(id: string) {
+  await checkAndRefreshToken();
+
+  let promise;
+  try {
+    const apiToken = await kvRead("spotifyToken");
+    const response = await axios.get(
+      `https://api.spotify.com/v1/albums/${id}`,
+      { headers: { Authorization: "Bearer " + apiToken } }
+    );
+    promise = Promise.resolve({ status: "success", data: response.data });
+  } catch (error) {
+    promise = Promise.reject({ status: "fail", error });
+  }
 }

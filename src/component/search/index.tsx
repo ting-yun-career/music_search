@@ -49,7 +49,7 @@ export default function Search(props: Props) {
             <input
               type="text"
               id={id}
-              className="w-full px-4 py-2 text-xs outline-1"
+              className="w-full px-2 py-2 text-xs outline-1"
               aria-label="Music Search"
               placeholder="Search by artist or album"
               value={keyword}
