@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import debounce from "lodash/debounce";
 import classNames from "classnames";
 import { search } from "@/actions/spotify";
+import Link from "next/link";
 
 interface Props {
   id: string;
@@ -87,14 +88,11 @@ export default function Search(props: Props) {
               </div>
               {result.artists.items.map(
                 (artist: { id: string; name: string }) => (
-                  <>
-                    <div
-                      key={artist.id}
-                      className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800"
-                    >
+                  <Link key={artist.id} href={`/artist/${artist.id}`}>
+                    <div className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800">
                       {artist.name}
                     </div>
-                  </>
+                  </Link>
                 )
               )}
             </>
@@ -106,14 +104,11 @@ export default function Search(props: Props) {
               </div>
               {result.albums.items.map(
                 (album: { id: string; name: string }) => (
-                  <>
-                    <div
-                      key={album.id}
-                      className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800"
-                    >
+                  <Link key={album.id} href={`/album/${album.id}`}>
+                    <div className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800">
                       {album.name}
                     </div>
-                  </>
+                  </Link>
                 )
               )}
             </>
