@@ -66,7 +66,6 @@ export async function search(
   type: string[] = ["artist", "album"],
   limit: number = 3
 ) {
-  console.log("queryString", queryString);
   await checkAndRefreshToken();
 
   let promise;
