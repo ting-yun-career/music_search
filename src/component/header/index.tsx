@@ -1,7 +1,3 @@
-"use client";
-
-import { search } from "@/actions/spotify";
-
 export default function Header() {
   return (
     <>
