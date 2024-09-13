@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import debounce from "lodash/debounce";
 import classNames from "classnames";
+import { search } from "@/actions/spotify";
 
 interface Props {
   id: string;
@@ -18,9 +19,12 @@ export default function Search(props: Props) {
 
   const debouncedSearch = useMemo(
     () =>
-      debounce(function (value: string) {
+      debounce(async function (value: string) {
         if (value?.length >= 3) {
-          setResult("anything");
+          const { status, data } = await search(value);
+          if (status === "success") {
+            setResult(data);
+          }
         } else {
           setResult(null);
         }
@@ -76,14 +80,44 @@ export default function Search(props: Props) {
             "drop-shadow-md"
           )}
         >
-          <div className="text-gray-500 py-[3px] font-semibold">Artists</div>
-          <div className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800">
-            Taylor Swift
-          </div>
-          <div className="text-gray-500 py-[3px] font-semibold">Albums</div>
-          <div className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800">
-            Forever
-          </div>
+          {result?.artists?.items?.length > 0 && (
+            <>
+              <div className="text-gray-500 py-[3px] font-semibold">
+                Artists
+              </div>
+              {result.artists.items.map(
+                (artist: { id: string; name: string }) => (
+                  <>
+                    <div
+                      key={artist.id}
+                      className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800"
+                    >
+                      {artist.name}
+                    </div>
+                  </>
+                )
+              )}
+            </>
+          )}
+          {result?.albums?.items?.length > 0 && (
+            <>
+              <div className="text-gray-500 py-[3px] font-semibold">
+                Artists
+              </div>
+              {result.albums.items.map(
+                (album: { id: string; name: string }) => (
+                  <>
+                    <div
+                      key={album.id}
+                      className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800"
+                    >
+                      {album.name}
+                    </div>
+                  </>
+                )
+              )}
+            </>
+          )}
         </div>
       </div>
     </>

@@ -63,8 +63,10 @@ async function checkAndRefreshToken() {
  */
 export async function search(
   queryString: string,
-  type: string[] = ["artist", "album"]
+  type: string[] = ["artist", "album"],
+  limit: number = 3
 ) {
+  console.log("queryString", queryString);
   await checkAndRefreshToken();
 
   let promise;
@@ -75,20 +77,20 @@ export async function search(
     const response = await fetch(
       `https://api.spotify.com/v1/search?q=${libQueryString.escape(
         queryString
-      )}&type=${type?.join(",")}`,
+      )}&type=${type?.join(",")}&limit=${limit}`,
       {
         method: "GET",
         headers: { Authorization: "Bearer " + apiToken },
       }
     );
-    const json = await response.json();
+    const data = await response.json();
     if (response.status === 200) {
-      promise = Promise.resolve({ status: "success", data: json });
+      promise = Promise.resolve({ status: "success", data });
     } else {
-      promise = Promise.reject({ status: "fail", error: json.error });
+      promise = Promise.reject({ status: "fail", error: data.error });
     }
   } catch (error) {
-    promise = Promise.reject({ status: "fail", error, test: "test" });
+    promise = Promise.reject({ status: "fail", error });
   }
 
   return promise;
