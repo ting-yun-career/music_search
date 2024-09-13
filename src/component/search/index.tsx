@@ -77,10 +77,14 @@ export default function Search(props: Props) {
             "drop-shadow-md"
           )}
         >
-          <div className="text-gray-500 py-[3px]">Artists</div>
-          <div className="text-gray-900 py-[3px]">artist1</div>
-          <div className="text-gray-500 py-[3px]">Albums</div>
-          <div className="text-gray-900 py-[3px]">album1</div>
+          <div className="text-gray-500 py-[3px] font-semibold">Artists</div>
+          <div className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800">
+            Taylor Swift
+          </div>
+          <div className="text-gray-500 py-[3px] font-semibold">Albums</div>
+          <div className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800">
+            Forever
+          </div>
         </div>
       </div>
     </>
