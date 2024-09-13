@@ -1,4 +1,3 @@
-import Header from "@/component/header";
 import React from "react";
 
 export default function Album({ params }: { params: { id: string } }) {
@@ -6,7 +5,6 @@ export default function Album({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <Header />
       <div>Album({id})</div>
     </>
   );
