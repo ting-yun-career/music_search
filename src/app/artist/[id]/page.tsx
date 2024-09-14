@@ -38,7 +38,7 @@ export default async function Artist({ params }: { params: { id: string } }) {
                 height={images?.[0].height}
               />
             </div>
-            <div className="">
+            <div>
               <h1 className="font-bold text-3xl">{name}</h1>
               <div className="mt-5">
                 Generes: {genres.join(",")}

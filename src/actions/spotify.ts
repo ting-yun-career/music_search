@@ -138,7 +138,7 @@ export async function getArtistAlbums(id: string) {
   return promise;
 }
 
-export async function getAlubm(id: string) {
+export async function getAlbum(id: string) {
   await checkAndRefreshToken();
 
   let promise;
@@ -148,6 +148,7 @@ export async function getAlubm(id: string) {
       `https://api.spotify.com/v1/albums/${id}`,
       { headers: { Authorization: "Bearer " + apiToken } }
     );
+    console.log(response.data);
     promise = Promise.resolve({ status: "success", data: response.data });
   } catch (error) {
     promise = Promise.reject({ status: "fail", error });
