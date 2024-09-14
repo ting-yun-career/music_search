@@ -54,7 +54,7 @@ export default async function Artist({ params }: { params: { id: string } }) {
           </div>
           <h1 className="font-bold text-2xl mt-10">Albums</h1>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-5">
-            {artistAlbums.items.map((album) => (
+            {artistAlbums.items.map((album: any) => (
               <Link key={album.id} href={`/album/${album.id}`}>
                 <div>
                   <div className="font-semibold text-sm max-w-[150px] overflow-hidden h-10 mt-2">

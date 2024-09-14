@@ -96,7 +96,7 @@ export default function Search(props: Props) {
               <div className="text-gray-400 py-[3px] font-semibold">
                 Artists
               </div>
-              {result.artists.items.map(
+              {result?.artists.items.map(
                 (artist: { id: string; name: string }) => (
                   <Link key={artist.id} href={`/artist/${artist.id}`}>
                     <div className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800">
@@ -112,7 +112,7 @@ export default function Search(props: Props) {
               <div className="text-gray-400 py-[3px] font-semibold mt-1">
                 Albums
               </div>
-              {result.albums.items.map(
+              {result?.albums.items.map(
                 (album: { id: string; name: string }) => (
                   <Link key={album.id} href={`/album/${album.id}`}>
                     <div className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800">
