@@ -1,7 +1,6 @@
 "use server";
 
 import { kvRead, kvSave } from "@/util/kv";
-import _remove from "lodash/remove";
 import { revalidatePath } from "next/cache";
 
 export async function getFavourites() {
@@ -45,7 +44,9 @@ export async function setFavourite(formData: FormData) {
 
   let promise;
   try {
-    const favourites: { [key: string]: string } = await kvRead("favourites");
+    const favourites = (await kvRead("favourites")) as {
+      [key: string]: string;
+    };
 
     if (favourites.hasOwnProperty(id)) {
       delete favourites[id];
