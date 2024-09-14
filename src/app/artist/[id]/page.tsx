@@ -3,6 +3,7 @@ import Image from "next/image";
 import Search from "@/component/search";
 import React from "react";
 import Link from "next/link";
+import Back from "@/component/back";
 
 export default async function Artist({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -22,7 +23,9 @@ export default async function Artist({ params }: { params: { id: string } }) {
 
       <div className="flex justify-center">
         <div className="w-3/4 max-w-[1440px] mt-[100px]">
-          <div>actions</div>
+          <div>
+            <Back />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 mt-[50px]">
             <div className="min-w-[200px] rounded-[3px] overflow-hidden">
               <Image
