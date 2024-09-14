@@ -8,12 +8,12 @@ export default function FavouriteArtists() {
       <div className="pt-5">
         <div className="flex justify-between">
           <Link
-            className="underline decoration-dotted  hover:text-pink-800"
+            className="underline decoration-dotted hover:text-pink-800"
             href="/"
           >
             The Weekend
           </Link>
-          <Like isLiked={true} />
+          <Like isLiked={true} id="123" />
         </div>
       </div>
     </div>
