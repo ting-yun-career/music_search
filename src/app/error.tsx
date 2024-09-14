@@ -3,7 +3,12 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function NotFound() {
+export default function Error({
+  error,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
   const router = useRouter();
   useEffect(() => {
     const timer = setTimeout(function () {
@@ -20,8 +25,9 @@ export default function NotFound() {
             <div className="absolute">
               <div className="">
                 <h1 className="my-2 text-gray-800 font-bold text-2xl">
-                  This page does not exist. Please check your URL.
+                  Looks like you have discovered a hole in our system.
                 </h1>
+                <p className="my-2 text-gray-800">Reason: {error.message}</p>
                 <p className="my-2 text-gray-800">
                   Redirecting you back home in 5 seconds
                 </p>
