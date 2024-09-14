@@ -5,6 +5,7 @@ import React from "react";
 import Link from "next/link";
 import Back from "@/component/back";
 import Like from "@/component/like";
+import { getFavourite } from "@/actions/favourite";
 
 export default async function Artist({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -13,6 +14,8 @@ export default async function Artist({ params }: { params: { id: string } }) {
   const { name, images, popularity, genres, followers, external_urls } = artist;
 
   const { data: artistAlbums } = await getArtistAlbums(id);
+
+  const { data: isLiked } = await getFavourite(id);
 
   return (
     <>
@@ -26,7 +29,7 @@ export default async function Artist({ params }: { params: { id: string } }) {
         <div className="w-3/4 max-w-[1440px] mt-[100px]">
           <div className="flex justify-between">
             <Back />
-            <Like isLiked={false} id="123" />
+            <Like isLiked={isLiked} id={id} artistName={name} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 mt-[50px]">
             <div className="min-w-[200px] rounded-[3px] overflow-hidden">

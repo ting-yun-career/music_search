@@ -2,40 +2,49 @@
 
 import { kvRead, kvSave } from "@/util/kv";
 import _remove from "lodash/remove";
+import { revalidatePath } from "next/cache";
 
 export async function getFavourite(id: string) {
   console.log("getFavourite");
 
-  // let promise;
-  // try {
-  //   const json = await kvRead("favourites");
-  //   const data = JSON.parse(json as string);
-  //   data.
+  let promise;
+  try {
+    const favourites: any = await kvRead("favourites");
 
-  //   promise = Promise.resolve({ status: "success", data: null });
-  // } catch (error) {
-  //   promise = Promise.reject({ status: "fail", error });
-  // }
-  // return promise;
+    promise = Promise.resolve({
+      status: "success",
+      data: favourites.hasOwnProperty(id),
+    });
+  } catch (error) {
+    promise = Promise.reject({ status: "fail", error });
+  }
+  return promise;
 }
 
 export async function setFavourite(formData: FormData) {
   console.log("setFavourite", formData);
   const id = formData.get("id") as string;
+  const name = formData.get("name") as string;
 
   let promise;
   try {
-    const str = await kvRead("favourites");
-    let favourites = (str as string).split(",");
+    const favourites: { [key: string]: string } = await kvRead("favourites");
 
-    if (favourites.includes(id)) {
-      favourites = _remove(favourites, id);
-    } else favourites.push(id);
+    if (favourites.hasOwnProperty(id)) {
+      delete favourites[id];
+    } else {
+      favourites[id] = name;
+    }
 
-    await kvSave("favourites", favourites.join(","));
+    await kvSave("favourites", favourites);
     promise = Promise.resolve({ status: "success" });
   } catch (error) {
+    console.log("hi");
     promise = Promise.reject({ status: "fail", error });
   }
+
+  revalidatePath("/");
+  revalidatePath(`/artist/${id}`);
+
   return promise;
 }

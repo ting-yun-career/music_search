@@ -3,10 +3,11 @@ import { setFavourite } from "@/actions/favourite";
 interface Props {
   id: string;
   isLiked: boolean;
+  artistName: string;
 }
 
 export default function Like(props: Props) {
-  const { id, isLiked } = props;
+  const { id, isLiked, artistName } = props;
 
   return (
     <form action={setFavourite}>
@@ -33,7 +34,7 @@ export default function Like(props: Props) {
           </div>
         </button>
       )}
-      <input type="hidden" name="isLiked" value={isLiked ? "true" : "false"} />
+      <input type="hidden" name="name" value={artistName} />
       <input type="hidden" name="id" value={id} />
     </form>
   );
