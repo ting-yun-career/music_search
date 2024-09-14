@@ -119,7 +119,7 @@ export async function getArtist(id: string) {
   return promise;
 }
 
-export async function getArtistAlbum(id: string) {
+export async function getArtistAlbums(id: string) {
   console.log("getArtistAlbum");
   await checkAndRefreshToken();
 
@@ -127,10 +127,10 @@ export async function getArtistAlbum(id: string) {
   try {
     const apiToken = await kvRead("spotifyToken");
     const response = await axios.get(
-      `https://api.spotify.com/v1/artists/${id}/albums`,
+      `https://api.spotify.com/v1/artists/${id}/albums?limit=3`,
       { headers: { Authorization: "Bearer " + apiToken } }
     );
-    console.log(response.data);
+    // console.log("album data: ", response.data);
     promise = Promise.resolve({ status: "success", data: response.data });
   } catch (error) {
     promise = Promise.reject({ status: "fail", error });
