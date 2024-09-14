@@ -11,15 +11,7 @@ export default async function Album({ params }: { params: { id: string } }) {
 
   const { data: album } = await getAlbum(id);
 
-  const {
-    name,
-    release_date,
-    artists,
-    tracks,
-    popularity,
-    images,
-    external_urls,
-  } = album;
+  const { name, release_date, popularity, images, external_urls } = album;
 
   return (
     <>
@@ -65,7 +57,7 @@ export default async function Album({ params }: { params: { id: string } }) {
           </div>
           <h1 className="font-bold text-2xl mt-10">Tracks</h1>
           <div className="mt-5">
-            {album?.tracks?.items?.map((track: any, i) => (
+            {album?.tracks?.items?.map((track: any, i: number) => (
               <>
                 <div key={track.id} className="text-sm py-[3px]">
                   <span className="inline-block w-8 hidden sm:inline">
