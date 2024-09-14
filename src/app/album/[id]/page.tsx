@@ -58,14 +58,10 @@ export default async function Album({ params }: { params: { id: string } }) {
           <h1 className="font-bold text-2xl mt-10">Tracks</h1>
           <div className="mt-5">
             {album?.tracks?.items?.map((track: any, i: number) => (
-              <>
-                <div key={track.id} className="text-sm py-[3px]">
-                  <span className="inline-block w-8 hidden sm:inline">
-                    #{i}
-                  </span>{" "}
-                  {track.name}
-                </div>
-              </>
+              <div key={track.id} className="text-sm py-[3px] text-gray-700">
+                <span className="inline-block w-8 hidden sm:inline">#{i}</span>{" "}
+                {track.name}
+              </div>
             ))}
           </div>
         </div>
