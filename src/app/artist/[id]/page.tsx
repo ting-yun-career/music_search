@@ -23,8 +23,8 @@ export default async function Artist({ params }: { params: { id: string } }) {
       <div className="flex justify-center">
         <div className="w-3/4 max-w-[1440px] mt-[100px]">
           <div>actions</div>
-          <div className="flex justify-center mt-[50px]">
-            <div className="min-w-[100px] ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 mt-[50px]">
+            <div className="min-w-[200px] rounded-[3px] overflow-hidden">
               <Image
                 className="w-full"
                 alt="artist photo"
@@ -33,7 +33,7 @@ export default async function Artist({ params }: { params: { id: string } }) {
                 height={images?.[0].height}
               />
             </div>
-            <div className="flex-1 ml-10 lg:ml-20">
+            <div className="">
               <h1 className="font-bold text-3xl">{name}</h1>
               <div className="mt-5">
                 Generes: {genres.join(",")}
@@ -50,7 +50,7 @@ export default async function Artist({ params }: { params: { id: string } }) {
             </div>
           </div>
           <h1 className="font-bold text-2xl mt-10">Albums</h1>
-          <div className="grid grid-cols-3 gap-4 mt-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-5">
             {artistAlbums.items.map((album) => (
               <div>
                 <div className="rounded-[3px] overflow-hidden">
