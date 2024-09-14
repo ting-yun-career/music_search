@@ -22,7 +22,7 @@ export default async function Artist({ params }: { params: { id: string } }) {
         </div>
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center pb-28">
         <div className="w-3/4 max-w-[1440px] mt-[100px]">
           <div className="flex justify-between">
             <Back />
