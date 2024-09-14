@@ -13,7 +13,7 @@ export default function FavouriteArtists() {
           >
             The Weekend
           </Link>
-          <Like />
+          <Like isLiked={true} />
         </div>
       </div>
     </div>
