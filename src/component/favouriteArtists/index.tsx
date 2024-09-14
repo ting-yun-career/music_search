@@ -31,7 +31,7 @@ export default function FavouriteArtists(props: Props) {
         ) : (
           <>
             <div className="flex justify-center items-center min-h-[100px]">
-              You don't have any favourite artist
+              You do not have any favourite artist
             </div>
           </>
         )}

@@ -50,8 +50,12 @@ export default async function Artist({ params }: { params: { id: string } }) {
                 popularity: {popularity}
                 <br />
                 {external_urls?.spotify && (
-                  <Link href={external_urls?.spotify ?? ""} target="_blank">
-                    External Link
+                  <Link
+                    className="underline decoration-dotted hover:text-pink-800"
+                    href={external_urls?.spotify ?? ""}
+                    target="_blank"
+                  >
+                    More Info
                   </Link>
                 )}
               </div>
