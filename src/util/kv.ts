@@ -1,9 +1,6 @@
 "use server";
 
-//import { unstable_noStore as noStore } from "next/cache";
 import { kv } from "@vercel/kv";
-
-// kv is vercel's built-in key-value persistent storage.
 
 export async function kvSave(key: string, value: string | object) {
   const status = await kv.set(key, value);
@@ -11,6 +8,5 @@ export async function kvSave(key: string, value: string | object) {
 }
 
 export async function kvRead(key: string) {
-  //noStore(); // required because NextJS does aggresive caching that sometimes returns stale value
   return await kv.get(key);
 }

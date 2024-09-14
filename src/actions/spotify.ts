@@ -13,7 +13,7 @@ async function checkToken() {
   try {
     // ping search endpoint to see if token is still good
     await axios.get(`https://api.spotify.com/v1/search?q=abc&type=artist`, {
-      headers: { Authorization: "Bearer " + apiToken },
+      headers: { Authorization: "Bearer " + apiToken, cache: "no-store" },
     });
     console.log("token still good");
     return true;
@@ -39,6 +39,7 @@ async function refreshToken() {
           Buffer.from(process.env.spotify_credential as string).toString(
             "base64"
           ),
+        cache: "no-store",
       },
     }
   );

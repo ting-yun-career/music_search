@@ -86,3 +86,14 @@ export default async function Artist({ params }: { params: { id: string } }) {
     </>
   );
 }
+
+export async function generateStaticParams() {
+  const popularArtists = [
+    "06HL4z0CvFAxyc27GXpf02", // Taylor Swift
+    "1Xyo4u8uXC1ZmMpatF05PJ", // The Weekend
+    "4dpARuHxo51G3z768sgnrY", // Adele
+  ];
+  return popularArtists.map((id) => ({
+    id,
+  }));
+}
