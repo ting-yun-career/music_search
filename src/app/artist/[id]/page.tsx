@@ -54,6 +54,9 @@ export default async function Artist({ params }: { params: { id: string } }) {
             {artistAlbums.items.map((album) => (
               <Link key={album.id} href={`/album/${album.id}`}>
                 <div>
+                  <div className="font-semibold text-sm max-w-[150px] overflow-hidden h-10 mt-2">
+                    {album.name}
+                  </div>
                   <div className="rounded-[3px] overflow-hidden">
                     <Image
                       className="w-full"
@@ -63,11 +66,8 @@ export default async function Artist({ params }: { params: { id: string } }) {
                       height={album.images?.[0].height}
                     />
                   </div>
-                  <div className="font-semibold text-sm max-w-[150px] overflow-hidden h-10 mt-2">
-                    {album.name}
-                  </div>
                   <div className="text-xs mt-2">
-                    Release Date: {album.release_date}
+                    Released: {album.release_date}
                   </div>
                 </div>
               </Link>

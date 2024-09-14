@@ -9,7 +9,7 @@ import axios from "axios";
 async function checkToken() {
   console.log("checkToken");
   const apiToken = await kvRead("spotifyToken");
-  console.log("old token", "...." + apiToken?.slice(-6));
+  console.log("old token", "...." + (apiToken as string)?.slice(-6));
   try {
     // ping search endpoint to see if token is still good
     await axios.get(`https://api.spotify.com/v1/search?q=abc&type=artist`, {

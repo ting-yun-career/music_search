@@ -93,7 +93,7 @@ export default function Search(props: Props) {
         >
           {result?.artists?.items?.length > 0 && (
             <>
-              <div className="text-gray-500 py-[3px] font-semibold">
+              <div className="text-gray-400 py-[3px] font-semibold">
                 Artists
               </div>
               {result.artists.items.map(
@@ -109,8 +109,8 @@ export default function Search(props: Props) {
           )}
           {result?.albums?.items?.length > 0 && (
             <>
-              <div className="text-gray-500 py-[3px] font-semibold">
-                Artists
+              <div className="text-gray-400 py-[3px] font-semibold mt-1">
+                Albums
               </div>
               {result.albums.items.map(
                 (album: { id: string; name: string }) => (
