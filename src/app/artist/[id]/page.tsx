@@ -9,19 +9,16 @@ import { getFavourite } from "@/actions/favourite";
 
 export default async function Artist({ params }: { params: { id: string } }) {
   const { id } = params;
-
   const { data: artist } = await getArtist(id);
   const { name, images, popularity, genres, followers, external_urls } = artist;
-
   const { data: artistAlbums } = await getArtistAlbums(id);
-
   const { data: isLiked } = await getFavourite(id);
 
   return (
     <>
       <div className="bg-black h-28 flex justify-center items-center">
         <div className="w-3/4 max-w-[1440px]">
-          <Search id="" />
+          <Search />
         </div>
       </div>
 

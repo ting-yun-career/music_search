@@ -7,7 +7,7 @@ import { search } from "@/actions/spotify";
 import Link from "next/link";
 
 interface Props {
-  id: string;
+  id?: string;
 }
 
 type Result = {
