@@ -8,7 +8,7 @@ export default function Back() {
           <span className="material-symbols-outlined text-[20px] font-light">
             arrow_back
           </span>
-          <span className="text-sm font-light ml-1">Back</span>
+          <span className="text-sm font-light ml-1 hidden sm:block">Back</span>
         </div>
       </Link>
     </>
