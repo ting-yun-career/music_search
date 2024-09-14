@@ -20,12 +20,15 @@ export default function Search(props: Props) {
 
   const [keyword, setKeyword] = useState("");
   const [result, setResult] = useState<Result | null>(null);
+  const [busy, setBusy] = useState(false);
 
   const debouncedSearch = useMemo(
     () =>
       debounce(async function (value: string) {
         if (value?.length >= 3) {
+          setBusy(true);
           const { status, data } = await search(value);
+          setBusy(false);
           if (status === "success") {
             setResult(data);
           }
@@ -41,8 +44,14 @@ export default function Search(props: Props) {
       <div className="relative">
         <div className="flex justify-center">
           <span className="w-[40px] bg-white text-gray-900 flex items-center justify-around rounded-l-[3px] cursor-pointer">
-            <span className="material-symbols-outlined text-[20px]">
-              search
+            <span
+              className={classNames(
+                "material-symbols-outlined",
+                "text-[20px]",
+                { "animate-spin": busy }
+              )}
+            >
+              {busy ? "autorenew" : "search"}
             </span>
           </span>
           <span className="flex-1">

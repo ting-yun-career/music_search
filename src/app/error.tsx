@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Image from "next/image";
 
 export default function Error({
   error,
@@ -34,12 +35,15 @@ export default function Error({
               </div>
             </div>
             <div>
-              <img src="https://i.ibb.co/G9DC8S0/404-2.png" />
+              <Image src="https://i.ibb.co/G9DC8S0/404-2.png" alt="404 Page" />
             </div>
           </div>
         </div>
         <div>
-          <img src="https://i.ibb.co/ck1SGFJ/Group.png" />
+          <Image
+            src="https://i.ibb.co/ck1SGFJ/Group.png"
+            alt="404 Illustration"
+          />
         </div>
       </div>
     </div>
