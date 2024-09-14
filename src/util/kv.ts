@@ -1,3 +1,5 @@
+"use server";
+
 import { kv } from "@vercel/kv";
 
 // kv is vercel's built-in key-value persistent storage.

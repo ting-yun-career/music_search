@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ["i.scdn.co"],
+  },
   env: {
     KV_URL: process.env.KV_URL,
     KV_REST_API_URL: process.env.KV_REST_API_URL,

@@ -7,26 +7,31 @@ import axios from "axios";
 // private
 
 async function checkToken() {
-  const token = await kvRead("spotifyToken");
-  const { status } = await fetch(
-    `https://api.spotify.com/v1/search?q=abc&type=artist`,
-    {
-      method: "GET",
-      headers: { Authorization: "Bearer " + token },
-    }
-  );
-  return status === 200;
+  console.log("checkToken");
+  const apiToken = await kvRead("spotifyToken");
+  console.log("old token", apiToken);
+  try {
+    // ping search endpoint to see if token is still good
+    await axios.get(`https://api.spotify.com/v1/search?q=abc&type=artist`, {
+      headers: { Authorization: "Bearer " + apiToken },
+    });
+    console.log("token still good");
+    return true;
+  } catch {
+    console.log("token is expired");
+    return false;
+  }
 }
 
 async function refreshToken() {
-  const isTokenValid = await checkToken();
+  console.log("refresh token");
 
-  if (!isTokenValid) {
-    const response = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
-      body: new URLSearchParams({
-        grant_type: "client_credentials",
-      }),
+  const response = await axios.post(
+    "https://accounts.spotify.com/api/token",
+    {
+      grant_type: "client_credentials",
+    },
+    {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization:
@@ -35,10 +40,10 @@ async function refreshToken() {
             "base64"
           ),
       },
-    });
-    const { access_token } = await response.json();
-    await kvSave("spotifyToken", access_token);
-  }
+    }
+  );
+  const { access_token } = response?.data;
+  await kvSave("spotifyToken", access_token);
 }
 
 async function checkAndRefreshToken() {
@@ -97,6 +102,7 @@ export async function search(
 }
 
 export async function getArtist(id: string) {
+  console.log("getArtist");
   await checkAndRefreshToken();
 
   let promise;
@@ -127,4 +133,5 @@ export async function getAlubm(id: string) {
   } catch (error) {
     promise = Promise.reject({ status: "fail", error });
   }
+  return promise;
 }
