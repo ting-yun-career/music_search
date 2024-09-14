@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import headerBg from "@/asset/header-background.jpg";
 import Search from "@/component/search";

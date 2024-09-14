@@ -9,7 +9,7 @@ import axios from "axios";
 async function checkToken() {
   console.log("checkToken");
   const apiToken = await kvRead("spotifyToken");
-  console.log("old token", apiToken);
+  console.log("old token", "...." + apiToken?.slice(-6));
   try {
     // ping search endpoint to see if token is still good
     await axios.get(`https://api.spotify.com/v1/search?q=abc&type=artist`, {
@@ -112,6 +112,25 @@ export async function getArtist(id: string) {
       `https://api.spotify.com/v1/artists/${id}`,
       { headers: { Authorization: "Bearer " + apiToken } }
     );
+    promise = Promise.resolve({ status: "success", data: response.data });
+  } catch (error) {
+    promise = Promise.reject({ status: "fail", error });
+  }
+  return promise;
+}
+
+export async function getArtistAlbum(id: string) {
+  console.log("getArtistAlbum");
+  await checkAndRefreshToken();
+
+  let promise;
+  try {
+    const apiToken = await kvRead("spotifyToken");
+    const response = await axios.get(
+      `https://api.spotify.com/v1/artists/${id}/albums`,
+      { headers: { Authorization: "Bearer " + apiToken } }
+    );
+    console.log(response.data);
     promise = Promise.resolve({ status: "success", data: response.data });
   } catch (error) {
     promise = Promise.reject({ status: "fail", error });

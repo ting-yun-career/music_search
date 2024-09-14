@@ -2,13 +2,13 @@ import { getArtist } from "@/actions/spotify";
 import Image from "next/image";
 import Search from "@/component/search";
 import React from "react";
+import Link from "next/link";
 
 export default async function Artist({ params }: { params: { id: string } }) {
   const { id } = params;
 
-  const { data } = await getArtist(id);
-  const { name, images, href, popularity, genres, followers, externals_urls } =
-    data;
+  const { data: artist } = await getArtist(id);
+  const { name, images, popularity, genres, followers, external_urls } = artist;
 
   return (
     <>
@@ -31,15 +31,19 @@ export default async function Artist({ params }: { params: { id: string } }) {
                 height={images?.[0].height}
               />
             </div>
-            <div className="flex-1"></div>
-            <div className="flex-1">
+            <div className="flex-1 ml-20">
               <h1 className="font-bold text-3xl">{name}</h1>
-              <div>
-                Generes: {genres.join(",")}# of Followers: {followers.total}
+              <div className="mt-5">
+                Generes: {genres.join(",")}
+                <br /># of Followers: {followers.total}
+                <br />
                 popularity: {popularity}
-                <a href={externals_urls?.spotify} target="_blank">
-                  External Link
-                </a>
+                <br />
+                {external_urls?.spotify && (
+                  <Link href={external_urls?.spotify ?? ""} target="_blank">
+                    External Link
+                  </Link>
+                )}
               </div>
             </div>
           </div>
