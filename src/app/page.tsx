@@ -3,6 +3,7 @@
 import Image from "next/image";
 import headerBg from "@/asset/header-background.jpg";
 import Search from "@/component/search";
+import FavouriteArtists from "@/component/favouriteArtists";
 
 export default function Home() {
   return (
@@ -26,6 +27,11 @@ export default function Home() {
             </label>
             <Search id="music-search" />
           </div>
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <div className="w-3/4 max-w-[600px] pt-[100px]">
+          <FavouriteArtists />
         </div>
       </div>
     </>
