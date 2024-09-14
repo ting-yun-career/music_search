@@ -38,7 +38,7 @@ export async function getFavourite(id: string) {
 }
 
 export async function setFavourite(formData: FormData) {
-  console.log("setFavourite", formData);
+  console.log("setFavourite");
   const id = formData.get("id") as string;
   const name = formData.get("name") as string;
 
