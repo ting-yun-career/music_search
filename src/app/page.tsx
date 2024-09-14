@@ -2,8 +2,11 @@ import Image from "next/image";
 import headerBg from "@/asset/header-background.jpg";
 import Search from "@/component/search";
 import FavouriteArtists from "@/component/favouriteArtists";
+import { getFavourites } from "@/actions/favourite";
 
-export default function Home() {
+export default async function Home() {
+  const { data: favourites } = await getFavourites();
+
   return (
     <>
       <div className="relative h-[30vh] sm:h-[50vh]">
@@ -29,7 +32,7 @@ export default function Home() {
       </div>
       <div className="flex justify-center">
         <div className="w-3/4 max-w-[600px] pt-[100px]">
-          <FavouriteArtists />
+          <FavouriteArtists favourites={favourites} />
         </div>
       </div>
     </>

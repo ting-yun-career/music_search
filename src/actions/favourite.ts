@@ -4,6 +4,23 @@ import { kvRead, kvSave } from "@/util/kv";
 import _remove from "lodash/remove";
 import { revalidatePath } from "next/cache";
 
+export async function getFavourites() {
+  console.log("getFavourite");
+
+  let promise;
+  try {
+    const favourites: any = await kvRead("favourites");
+
+    promise = Promise.resolve({
+      status: "success",
+      data: favourites,
+    });
+  } catch (error) {
+    promise = Promise.reject({ status: "fail", error });
+  }
+  return promise;
+}
+
 export async function getFavourite(id: string) {
   console.log("getFavourite");
 
