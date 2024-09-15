@@ -14,4 +14,10 @@ describe("Page component", () => {
     const searchInput = await getByPlaceholderText("Search by artist or album");
     expect(searchInput).toBeInTheDocument();
   });
+
+  it("renders the FavouriteArtists component", async () => {
+    const { getByText } = render(await Home());
+    const favouriteArtistsText = await getByText("My Favourite Artists");
+    expect(favouriteArtistsText).toBeInTheDocument();
+  });
 });
