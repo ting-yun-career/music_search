@@ -38,7 +38,7 @@ export default async function Album({ params }: { params: { id: string } }) {
               <div className="mt-5">
                 Released: {release_date}
                 <br />
-                popularity: {popularity}
+                Popularity: {popularity}
                 <br />
                 {external_urls?.spotify && (
                   <Link
