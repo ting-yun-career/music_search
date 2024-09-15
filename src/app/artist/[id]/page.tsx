@@ -44,7 +44,7 @@ export default async function Artist({ params }: { params: { id: string } }) {
                 Generes: {genres.join(",")}
                 <br /># of Followers: {followers.total}
                 <br />
-                popularity: {popularity}
+                Popularity: {popularity}
                 <br />
                 {external_urls?.spotify && (
                   <Link
