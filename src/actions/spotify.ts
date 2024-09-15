@@ -74,26 +74,22 @@ export async function search(
   limit: number = 3
 ) {
   await checkAndRefreshToken();
-
   let promise;
 
   try {
     const apiToken = await kvRead("spotifyToken");
-
-    const response = await fetch(
-      `https://api.spotify.com/v1/search?q=${libQueryString.escape(
-        queryString
-      )}&type=${type?.join(",")}&limit=${limit}`,
-      {
-        method: "GET",
-        headers: { Authorization: "Bearer " + apiToken },
-      }
-    );
-    const data = await response.json();
+    const url = `https://api.spotify.com/v1/search?q=${libQueryString.escape(
+      queryString
+    )}&type=${type?.join(",")}&limit=${limit}`;
+    const response = await axios.get(url, {
+      headers: { Authorization: "Bearer " + apiToken, cache: "no-store" },
+      timeout: 5000,
+    });
+    const data = response.data;
     if (response.status === 200) {
       promise = Promise.resolve({ status: "success", data });
     } else {
-      promise = Promise.reject({ status: "fail", error: data.error });
+      promise = Promise.reject({ status: "fail", error: data });
     }
   } catch (error) {
     promise = Promise.reject({ status: "fail", error });

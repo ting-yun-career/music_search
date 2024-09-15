@@ -12,6 +12,7 @@ describe("Page component", () => {
   it("renders the search input field", async () => {
     const { getByPlaceholderText } = render(await Home());
     const input = await getByPlaceholderText("Search by artist or album");
+
     expect(input).toBeInTheDocument();
   });
 

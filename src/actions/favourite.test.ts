@@ -1,12 +1,16 @@
-import { getFavourites } from "./favourite";
-import { kvRead } from "../util/kv";
+import { getFavourites, setFavourite } from "./favourite";
+import { kvRead, kvSave } from "../util/kv";
 
 jest.mock("../util/kv", () => ({
   kvRead: jest.fn(),
   kvSave: jest.fn(),
 }));
 
-describe("getFavourites function", () => {
+jest.mock("next/cache", () => ({
+  revalidatePath: jest.fn(),
+}));
+
+describe("getFavourites", () => {
   it("calls kvRead", async () => {
     const kv = jest.requireMock("../util/kv");
     kv.kvRead.mockReturnValue({});
@@ -30,7 +34,21 @@ describe("getFavourites function", () => {
     } catch (error) {
       expect(error.status).toBe("fail");
     }
-    // also works but more confusing
-    // await expect(getFavourites()).rejects.toHaveProperty("status", "fail");
+  });
+});
+
+describe("setFavourite", () => {
+  it("calls revalidatePath with correct arguments", async () => {
+    jest.clearAllMocks();
+
+    const formDataMock = new FormData();
+    formDataMock.append("key1", "value1");
+    formDataMock.append("key2", "value2");
+
+    await setFavourite(formDataMock);
+    const nextCache = jest.requireMock("next/cache");
+
+    expect(kvSave).toHaveBeenCalledTimes(1);
+    expect(nextCache.revalidatePath).toHaveBeenCalledTimes(2);
   });
 });
