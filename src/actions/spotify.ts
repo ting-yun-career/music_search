@@ -107,7 +107,7 @@ export async function getArtist(id: string) {
     const apiToken = await kvRead("spotifyToken");
     const response = await axios.get(
       `https://api.spotify.com/v1/artists/${id}`,
-      { headers: { Authorization: "Bearer " + apiToken } }
+      { headers: { Authorization: "Bearer " + apiToken }, timeout: 5000 }
     );
     promise = Promise.resolve({ status: "success", data: response.data });
   } catch (error) {
@@ -125,7 +125,10 @@ export async function getArtistAlbums(id: string) {
     const apiToken = await kvRead("spotifyToken");
     const response = await axios.get(
       `https://api.spotify.com/v1/artists/${id}/albums?limit=3`,
-      { headers: { Authorization: "Bearer " + apiToken } }
+      {
+        headers: { Authorization: "Bearer " + apiToken, cache: "no-store" },
+        timeout: 5000,
+      }
     );
     // console.log("album data: ", response.data);
     promise = Promise.resolve({ status: "success", data: response.data });
@@ -143,7 +146,7 @@ export async function getAlbum(id: string) {
     const apiToken = await kvRead("spotifyToken");
     const response = await axios.get(
       `https://api.spotify.com/v1/albums/${id}`,
-      { headers: { Authorization: "Bearer " + apiToken } }
+      { headers: { Authorization: "Bearer " + apiToken }, timeout: 5000 }
     );
     promise = Promise.resolve({ status: "success", data: response.data });
   } catch (error) {
