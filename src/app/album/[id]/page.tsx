@@ -7,9 +7,7 @@ import Link from "next/link";
 
 export default async function Album({ params }: { params: { id: string } }) {
   const { id } = params;
-
   const { data: album } = await getAlbum(id);
-
   const { name, release_date, popularity, images, external_urls } = album;
 
   return (
@@ -28,10 +26,11 @@ export default async function Album({ params }: { params: { id: string } }) {
             <div className="min-w-[200px] rounded-[3px] overflow-hidden">
               <Image
                 className="w-full"
-                alt="artist photo"
+                alt={name}
                 src={images?.[0].url}
                 width={images?.[0].width}
                 height={images?.[0].height}
+                aria-label={`Album cover for ${name}`}
               />
             </div>
             <div>

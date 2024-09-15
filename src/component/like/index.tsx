@@ -12,7 +12,10 @@ export default function Like(props: Props) {
   return (
     <form action={setFavourite}>
       {isLiked ? (
-        <button type="submit">
+        <button
+          type="submit"
+          aria-label={`Remove ${artistName} from favourites list`}
+        >
           <div className="flex text-pink-800 hover:text-gray-800 cursor-pointer">
             <span className="material-symbols-outlined text-[20px] font-light">
               heart_minus
@@ -23,7 +26,10 @@ export default function Like(props: Props) {
           </div>
         </button>
       ) : (
-        <button type="submit">
+        <button
+          type="submit"
+          aria-label={`Add ${artistName} to favourites list`}
+        >
           <div className="flex hover:text-pink-800 cursor-pointer">
             <span className="material-symbols-outlined text-[20px] font-light">
               heart_plus

@@ -51,6 +51,7 @@ export default async function Artist({ params }: { params: { id: string } }) {
                     className="underline decoration-dotted hover:text-pink-800"
                     href={external_urls?.spotify ?? ""}
                     target="_blank"
+                    aria-label={`Visit ${name}'s Spotify page`}
                   >
                     More Info
                   </Link>

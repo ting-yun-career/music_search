@@ -59,7 +59,6 @@ export default function Search(props: Props) {
               type="text"
               id={id}
               className="w-full px-2 py-2 text-xs outline-1"
-              aria-label="Music Search"
               placeholder="Search by artist or album"
               value={keyword}
               onChange={(e) => {
@@ -68,6 +67,10 @@ export default function Search(props: Props) {
               }}
               autoComplete="off"
               list="mySuggestions"
+              aria-label="Music Search"
+              aria-placeholder="Search by artist or album"
+              aria-autocomplete="list"
+              aria-controls="search-results-dropdown"
             />
             <datalist id="mySuggestions">
               <option value="The Weekend" />
@@ -86,6 +89,7 @@ export default function Search(props: Props) {
           </span>
         </div>
         <div
+          id="search-results-dropdown"
           className={classNames(
             { hidden: !result },
             "absolute",
@@ -99,6 +103,9 @@ export default function Search(props: Props) {
             "py-3",
             "drop-shadow-md"
           )}
+          aria-label="Search results"
+          aria-live="polite"
+          aria-atomic="true"
         >
           {result?.artists?.items?.length > 0 && (
             <>
@@ -107,7 +114,11 @@ export default function Search(props: Props) {
               </div>
               {result?.artists.items.map(
                 (artist: { id: string; name: string }) => (
-                  <Link key={artist.id} href={`/artist/${artist.id}`}>
+                  <Link
+                    key={artist.id}
+                    href={`/artist/${artist.id}`}
+                    aria-label={`Artist: ${artist.name}`}
+                  >
                     <div className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800">
                       {artist.name}
                     </div>
@@ -123,7 +134,11 @@ export default function Search(props: Props) {
               </div>
               {result?.albums.items.map(
                 (album: { id: string; name: string }) => (
-                  <Link key={album.id} href={`/album/${album.id}`}>
+                  <Link
+                    key={album.id}
+                    href={`/album/${album.id}`}
+                    aria-label={`Album: ${album.name}`}
+                  >
                     <div className="text-gray-900 py-[3px] cursor-pointer hover:text-pink-800">
                       {album.name}
                     </div>

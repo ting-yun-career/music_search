@@ -12,7 +12,9 @@ export default function FavouriteArtists(props: Props) {
 
   return (
     <div className="border border-gray-300 rounded-[3px] px-5 py-6">
-      <h2 className="text-xl font-bold">My Favourite Artists</h2>
+      <h2 className="text-xl font-bold" aria-label="Favourite Artists List">
+        My Favourite Artists
+      </h2>
       <div className="pt-5">
         {artistIds.length > 0 ? (
           <>
@@ -21,6 +23,7 @@ export default function FavouriteArtists(props: Props) {
                 <Link
                   className="underline decoration-dotted hover:text-pink-800"
                   href={`/artist/${id}`}
+                  aria-label={`Go to ${favourites[id]} artist page`}
                 >
                   {favourites[id]}
                 </Link>
