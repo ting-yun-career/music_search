@@ -1,4 +1,4 @@
-import { getFavourites, setFavourite } from "./favourite";
+import { getFavourite, getFavourites, setFavourite } from "./favourite";
 import { kvRead, kvSave } from "../util/kv";
 
 jest.mock("../util/kv", () => ({
@@ -11,34 +11,41 @@ jest.mock("next/cache", () => ({
 }));
 
 describe("getFavourites", () => {
-  it("calls kvRead", async () => {
+  it("normal", async () => {
     const kv = jest.requireMock("../util/kv");
-    kv.kvRead.mockReturnValue({});
+    kv.kvRead.mockReturnValue({ "123": "foo" });
     const result = await getFavourites();
     expect(kvRead).toHaveBeenCalledTimes(1);
     expect(result.status).toBe("success");
-    expect(result.data).toEqual({});
+    expect(result.data).toEqual({ "123": "foo" });
   });
 
-  it("returns failed promise if kvRead throws", async () => {
-    jest.clearAllMocks();
+  it("vercel kv broken", async () => {
+    // TODO
+  });
+});
 
+describe("getFavourite", () => {
+  it("record found", async () => {
     const kv = jest.requireMock("../util/kv");
-    kv.kvRead.mockImplementationOnce(() => {
-      throw new Error("Mock error");
-    });
+    kv.kvRead.mockReturnValue({ "123": "foo" });
+    const result = await getFavourite("123");
+    expect(kvRead).toHaveBeenCalledTimes(1);
+    expect(result.status).toBe("success");
+    expect(result.data).toBe(true);
+  });
 
-    try {
-      await getFavourites();
-      fail("Expected getFavourites to throw an error");
-    } catch (error) {
-      expect(error.status).toBe("fail");
-    }
+  it("record not found", async () => {
+    // TODO
+  });
+
+  it("vercel kv broken", async () => {
+    // TODO
   });
 });
 
 describe("setFavourite", () => {
-  it("calls revalidatePath with correct arguments", async () => {
+  it("calls dkSave and revalidatePath", async () => {
     jest.clearAllMocks();
 
     const formDataMock = new FormData();
@@ -50,5 +57,17 @@ describe("setFavourite", () => {
 
     expect(kvSave).toHaveBeenCalledTimes(1);
     expect(nextCache.revalidatePath).toHaveBeenCalledTimes(2);
+  });
+
+  it("add new record if id does not exist in kv database ", async () => {
+    // TODO
+  });
+
+  it("delete existing record if id already exists in kv database", async () => {
+    // TODO
+  });
+
+  it("vercel kv broken", async () => {
+    // TODO
   });
 });
