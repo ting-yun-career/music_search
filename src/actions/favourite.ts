@@ -4,8 +4,6 @@ import { kvRead, kvSave } from "@/util/kv";
 import { revalidatePath } from "next/cache";
 
 export async function getFavourites() {
-  console.log("getFavourites");
-
   let promise;
   try {
     const favourites: any = await kvRead("favourites");
