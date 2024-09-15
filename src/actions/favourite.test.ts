@@ -8,7 +8,9 @@ jest.mock("../util/kv", () => ({
 
 describe("getFavourites function", () => {
   it("calls kvRead", async () => {
-    await getFavourites();
+    const result = await getFavourites();
     expect(kvRead).toHaveBeenCalledTimes(1);
+    expect(result.status).toBe("success");
+    expect(result.data).toEqual({});
   });
 });

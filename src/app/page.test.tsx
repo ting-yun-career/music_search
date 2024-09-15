@@ -11,8 +11,8 @@ jest.mock("../actions/favourite.ts", () => ({
 describe("Page component", () => {
   it("renders the search input field", async () => {
     const { getByPlaceholderText } = render(await Home());
-    const searchInput = await getByPlaceholderText("Search by artist or album");
-    expect(searchInput).toBeInTheDocument();
+    const input = await getByPlaceholderText("Search by artist or album");
+    expect(input).toBeInTheDocument();
   });
 
   it("renders the FavouriteArtists component", async () => {
